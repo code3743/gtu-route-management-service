@@ -29,5 +29,11 @@ public class RouteServiceImpl implements RouteService {
             throw new IllegalArgumentException("Some stops do not exists: " + stopIds);
         }
     }
+
+    @Override
+    public Route saveRoute(Route route) {
+        validateRoute(route);
+        return routeRepository.save(route);
+    }
     
 }

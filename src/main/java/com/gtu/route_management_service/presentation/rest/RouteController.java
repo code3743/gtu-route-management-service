@@ -24,8 +24,10 @@ public class RouteController {
     public ResponseEntity<String> createRoute(@Valid @RequestBody RouteDTO routeDTO) {
         Route route = routeMapper.toDomain(routeDTO);
         routeService.validateRoute(route);
-        
-        return ResponseEntity.ok("Route created successfully: " +  routeDTO.getName());
+
+        Route savedRoute = routeService.saveRoute(route);
+
+        return ResponseEntity.ok("Route created successfully: " +  savedRoute.getName());
     }
     
 }
