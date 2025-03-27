@@ -47,8 +47,8 @@ public class NeighborhoodRepositoryImpl implements NeighborhoodRepository{
 
 
     @Override
-    public boolean existsByName(String name) {
-       throw new UnsupportedOperationException("Not implemented yet");
+    public boolean existsById(Long id) {
+        return jpaNeighborhoodRepository.existsById(id);
     }
-    
+
 }

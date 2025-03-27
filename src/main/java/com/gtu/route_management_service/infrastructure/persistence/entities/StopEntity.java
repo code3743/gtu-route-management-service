@@ -1,6 +1,13 @@
 package com.gtu.route_management_service.infrastructure.persistence.entities;
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Column;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 
 @Entity
 @Table(name = "stops")
@@ -19,9 +26,8 @@ public class StopEntity {
     @Column(length = 500)
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "neighborhood_id", nullable = false)
-    private NeighborhoodEntity neighborhood;
+    @Column(name = "neighborhood_id", nullable = false)
+    private Long neighborhoodId;
 
     @Column(nullable = false)
     private Double latitude;
@@ -29,10 +35,10 @@ public class StopEntity {
     @Column(nullable = false)
     private Double longitude;
 
-    public StopEntity(String name, String description, NeighborhoodEntity neighborhood, Double latitude, Double longitude) {
+    public StopEntity(String name, String description, Long neighborhoodId, Double latitude, Double longitude) {
         this.name = name;
         this.description = description;
-        this.neighborhood = neighborhood;
+        this.neighborhoodId = neighborhoodId;
         this.latitude = latitude;
         this.longitude = longitude;
     }

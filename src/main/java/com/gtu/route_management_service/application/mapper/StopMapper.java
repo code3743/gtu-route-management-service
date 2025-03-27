@@ -15,7 +15,7 @@ public class StopMapper {
             domain.getId(),
             domain.getName(),
             domain.getDescription(),
-            NeighborhoodMapper.toDTO(domain.getNeighborhood()), 
+            domain.getNeighborhoodId(), 
             domain.getLatitude(),
             domain.getLongitude()
         );
@@ -26,7 +26,7 @@ public class StopMapper {
             dto.getId(),
             dto.getName(),
             dto.getDescription(),
-            NeighborhoodMapper.toDomain(dto.getNeighborhood()),
+            dto.getNeighborhoodId(),
             dto.getLatitude(),
             dto.getLongitude()
         );

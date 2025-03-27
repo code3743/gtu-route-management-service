@@ -11,7 +11,7 @@ public class StopDTO {
     private Long id;
     private String name;
     private String description;
-    private NeighborhoodDTO neighborhood; 
+    private Long neighborhoodId; 
     private Double latitude;
     private Double longitude;
 }
