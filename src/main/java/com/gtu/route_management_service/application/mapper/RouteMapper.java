@@ -9,6 +9,7 @@ public class RouteMapper {
     public Route toDomain(RouteDTO routeDTO){
         return new Route(
             routeDTO.getName(),
+            routeDTO.getDescription(),
             routeDTO.getStartTime(),
             routeDTO.getEndTime(),
             NeighborhoodMapper.toDomainList(routeDTO.getNeighborhoods()),
