@@ -29,5 +29,5 @@ public class RouteDTO {
 
     @NotEmpty(message = "The stop list cannot be empty")
     @Size(min = 2, message = "The route must have at least two stops")
-    private List<StopDTO> stops;
+    private List<Long> stops;
 }

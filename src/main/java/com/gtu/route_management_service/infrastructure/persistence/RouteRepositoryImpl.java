@@ -1,10 +1,14 @@
 package com.gtu.route_management_service.infrastructure.persistence;
 
+
 import com.gtu.route_management_service.domain.model.Route;
+import com.gtu.route_management_service.domain.model.Stop;
 import com.gtu.route_management_service.domain.repository.RouteRepository;
 import com.gtu.route_management_service.infrastructure.persistence.entities.RouteEntity;
 import com.gtu.route_management_service.infrastructure.persistence.mappers.RouteEntityMapper;
+import com.gtu.route_management_service.infrastructure.persistence.mappers.StopMapper;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
@@ -20,8 +24,8 @@ public class RouteRepositoryImpl implements RouteRepository{
     }
 
     @Override
-    public Route save(Route route) {
-        RouteEntity routeEntity = routeEntityMapper.toEntity(route);
+    public Route save(Route route, List<Stop> stops) {
+        RouteEntity routeEntity = routeEntityMapper.toEntity(route, StopMapper.toEntityList(stops));
         RouteEntity savedEntity = jpaRouteRepository.save(routeEntity);
         return routeEntityMapper.toDomain(savedEntity);
     }

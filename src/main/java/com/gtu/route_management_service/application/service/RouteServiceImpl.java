@@ -1,6 +1,7 @@
 package com.gtu.route_management_service.application.service;
 
 import com.gtu.route_management_service.domain.model.Route;
+import com.gtu.route_management_service.domain.model.Stop;
 import com.gtu.route_management_service.domain.repository.RouteRepository;
 import com.gtu.route_management_service.domain.repository.StopRepository;
 import com.gtu.route_management_service.domain.service.RouteService;
@@ -24,7 +25,7 @@ public class RouteServiceImpl implements RouteService {
             throw new IllegalArgumentException("The route name already exists: " + route.getName());
         }
 
-        List<Long> stopIds = route.getStop().stream().map(stop -> stop.getId()).toList();
+        List<Long> stopIds = route.getStopsIds();
         List<Long> existingStopIds = stopRepository.findAllExistingIds(stopIds);
         if (existingStopIds.size() != stopIds.size()) {
             throw new IllegalArgumentException("Some stops do not exists: " + stopIds);
@@ -34,7 +35,12 @@ public class RouteServiceImpl implements RouteService {
     @Override
     public Route saveRoute(Route route) {
         validateRoute(route);
-        return routeRepository.save(route);
+        List<Long> stopIds = route.getStopsIds();
+        List<Stop> stops = stopRepository.findAllById(stopIds);
+        if (stops.size() != stopIds.size()) {
+            throw new IllegalArgumentException("Some stops do not exist: " + stopIds);
+        }
+        return routeRepository.save(route, stops);
     }
     
 }
