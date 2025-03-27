@@ -1,7 +1,7 @@
 package com.gtu.route_management_service.presentation.rest;
 
 import com.gtu.route_management_service.application.dto.RouteDTO;
-import com.gtu.route_management_service.application.dto.RouteMapper;
+import com.gtu.route_management_service.application.mapper.RouteMapper;
 import com.gtu.route_management_service.domain.model.Route;
 import com.gtu.route_management_service.domain.service.RouteService;
 import jakarta.validation.Valid;
