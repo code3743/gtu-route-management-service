@@ -31,8 +31,8 @@ public class NeighborhoodRepositoryImpl implements NeighborhoodRepository{
     }
 
     @Override
-    public Optional<Neighborhood> findAllById(Long id) {
-        return jpaNeighborhoodRepository.findById(id).map(NeighborhoodMapper::toDomain);
+    public List<Neighborhood> findAllById(List<Long> id) {
+        return jpaNeighborhoodRepository.findAllById(id).stream().map(NeighborhoodMapper::toDomain).toList();
     }
 
     @Override
@@ -49,6 +49,11 @@ public class NeighborhoodRepositoryImpl implements NeighborhoodRepository{
     @Override
     public boolean existsById(Long id) {
         return jpaNeighborhoodRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<Neighborhood> findById(Long id) {
+        return jpaNeighborhoodRepository.findById(id).map(NeighborhoodMapper::toDomain);
     }
 
 }

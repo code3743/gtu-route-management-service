@@ -30,7 +30,6 @@ public class RouteEntity {
 
     @ManyToMany
     @JoinTable(name = "route_neighborhoods", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "neighborhood_id"))
-    @Column(name = "neighborhood_id")
     private List<NeighborhoodEntity> neighborhood;
 
     @ManyToMany

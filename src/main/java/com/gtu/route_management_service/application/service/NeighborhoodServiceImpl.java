@@ -27,12 +27,17 @@ public class NeighborhoodServiceImpl implements NeighborhoodService {
     }
 
     @Override
-    public Optional<Neighborhood> getNeighborhoodById(Long id) {
+    public List<Neighborhood> getNeighborhoodsByIds(List<Long> id) {
         return neighborhoodRepository.findAllById(id);
     }
 
     @Override
     public void deleteNeighborhood(Long id) {
         neighborhoodRepository.deleteById(id);
+    }
+
+    @Override
+    public Optional<Neighborhood> getNeighborhoodById(Long id) {
+        return neighborhoodRepository.findById(id);
     }
 }

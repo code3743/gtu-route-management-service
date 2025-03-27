@@ -9,7 +9,8 @@ public interface NeighborhoodRepository {
     Neighborhood save(Neighborhood neighborhood);
     boolean existsById(Long id);
     List<Neighborhood> findAll();
-    Optional<Neighborhood> findAllById(Long id);
+    Optional<Neighborhood> findById(Long id);
+    List<Neighborhood> findAllById(List<Long> id);
     void deleteById(Long id);
     Neighborhood update(Neighborhood neighborhood);
 } 
