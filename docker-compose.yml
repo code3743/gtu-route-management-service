@@ -1,23 +1,22 @@
-version: '3.8'
-
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres_db
+  db:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
       POSTGRES_DB: gtu_db
-    ports:
-     - "5432:5432"
     volumes:
-     - postgres_data:/var/lib/postgresql/data
-    networks:
-     - app-network
-  
+      - db_data:/var/lib/postgresql/data
+  admin:
+    image: dpage/pgadmin4
+    ports:
+      - "3000:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gtu.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - db
 volumes:
-  postgres_data:
-
-networks:
-  app-network:
-    driver: bridge
+  db_data:

@@ -1,8 +1,10 @@
-package com.gtu.route_management_service.domain.service;
+package com.gtu.route_management_service.application.service;
 
 import com.gtu.route_management_service.domain.model.Route;
 import com.gtu.route_management_service.domain.repository.RouteRepository;
 import com.gtu.route_management_service.domain.repository.StopRepository;
+import com.gtu.route_management_service.domain.service.RouteService;
+
 import org.springframework.stereotype.Service;
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class RouteServiceImpl implements RouteService {
             throw new IllegalArgumentException("The route name already exists: " + route.getName());
         }
 
-        List<Long> stopIds = route.getStopIds();
+        List<Long> stopIds = route.getStop().stream().map(stop -> stop.getId()).toList();
         List<Long> existingStopIds = stopRepository.findAllExistingIds(stopIds);
         if (existingStopIds.size() != stopIds.size()) {
             throw new IllegalArgumentException("Some stops do not exists: " + stopIds);

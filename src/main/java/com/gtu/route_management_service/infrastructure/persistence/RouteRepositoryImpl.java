@@ -2,6 +2,8 @@ package com.gtu.route_management_service.infrastructure.persistence;
 
 import com.gtu.route_management_service.domain.model.Route;
 import com.gtu.route_management_service.domain.repository.RouteRepository;
+import com.gtu.route_management_service.infrastructure.persistence.entities.RouteEntity;
+import com.gtu.route_management_service.infrastructure.persistence.mappers.RouteEntityMapper;
 
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
