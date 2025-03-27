@@ -16,7 +16,7 @@ public class StopMapper {
             entity.getId(),
             entity.getName(),
             entity.getDescription(),
-            NeighborhoodMapper.toDomain(entity.getNeighborhood()), 
+            entity.getNeighborhoodId(), 
             entity.getLatitude(),
             entity.getLongitude()
         );
@@ -29,7 +29,7 @@ public class StopMapper {
         return new StopEntity(
             domain.getName(),
             domain.getDescription(),
-            NeighborhoodMapper.toEntity(domain.getNeighborhood()), 
+            domain.getNeighborhoodId(), 
             domain.getLatitude(),
             domain.getLongitude()
         ); 

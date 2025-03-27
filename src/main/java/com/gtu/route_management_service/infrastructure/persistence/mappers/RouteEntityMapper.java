@@ -21,6 +21,7 @@ public class RouteEntityMapper {
     public Route toDomain(RouteEntity entity) {
         return new Route(
             entity.getName(),
+            entity.getDescription(),
             entity.getStarTime(),
             entity.getEndTime(),
             NeighborhoodMapper.toDomainList(entity.getNeighborhood()),

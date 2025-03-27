@@ -16,9 +16,9 @@ public class Route {
 
     }
 
-    public Route(String name, LocalTime startTime, LocalTime endTime, List<Neighborhood> neighborhoods, List<Stop> stopIds) {
+    public Route(String name, String description, LocalTime startTime, LocalTime endTime, List<Neighborhood> neighborhoods, List<Stop> stopIds) {
         this.name = name;
-        this.description = null;
+        this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
         this.neighborhood = neighborhoods;

@@ -6,24 +6,24 @@ public class Stop {
     private final Long id;
     private final String name;
     private final String description;
-    private final Neighborhood neighborhood;
+    private final Long neighborhoodId;
     private final Double latitude;
     private final Double longitude;
 
-    public Stop(Long id, String name, String description, Neighborhood neighborhood, Double latitude, Double longitude) {
+    public Stop(Long id, String name, String description, Long neighborhoodId, Double latitude, Double longitude) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.neighborhood = neighborhood;
+        this.neighborhoodId = neighborhoodId;
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Stop(String name, String description, Neighborhood neighborhood, Double latitude, Double longitude) {
+    public Stop(String name, String description, Long neighborhoodId, Double latitude, Double longitude) {
         this.id = null;
         this.name = name;
         this.description = description;
-        this.neighborhood = neighborhood;
+        this.neighborhoodId  = neighborhoodId;
         this.latitude = latitude;
         this.longitude = longitude;
     }
@@ -40,8 +40,8 @@ public class Stop {
         return description;
     }
 
-    public Neighborhood getNeighborhood() {
-        return neighborhood;
+    public Long getNeighborhoodId() {
+        return neighborhoodId;
     }
 
     public Double getLatitude() {
@@ -67,6 +67,6 @@ public class Stop {
 
     @Override
     public String toString() {
-        return "Stop{id=" + id + ", name='" + name + "', neighborhood=" + neighborhood.getName() + "}";
+        return "Stop{id=" + id + ", name='" + name + "', neighborhood=" + neighborhoodId + "}";
     }
 }
