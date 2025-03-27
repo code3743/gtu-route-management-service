@@ -22,7 +22,6 @@ public class CreateRouteUseCase {
     @Transactional
     public RouteDTO execute(RouteDTO routeDTO) {
         Route route = routeMapper.toDomain(routeDTO);
-        routeService.validateRoute(route);
         Route savedRoute = routeService.saveRoute(route);
 
         return routeMapper.toDTO(savedRoute); 
