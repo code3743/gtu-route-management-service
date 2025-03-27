@@ -13,4 +13,5 @@ public interface StopRepository {
     void deleteById(Long id);
     List<Stop> findAll();
     List<Stop> findAllById(List<Long> ids);
+    Stop update(Stop stop);
 }

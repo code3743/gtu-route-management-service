@@ -2,8 +2,8 @@ package com.gtu.route_management_service.infrastructure.persistence;
 
 import com.gtu.route_management_service.domain.model.Stop;
 import com.gtu.route_management_service.domain.repository.StopRepository;
-import com.gtu.route_management_service.infrastructure.entities.StopEntity;
-import com.gtu.route_management_service.infrastructure.mappers.StopMapper;
+import com.gtu.route_management_service.infrastructure.persistence.entities.StopEntity;
+import com.gtu.route_management_service.infrastructure.persistence.mappers.StopMapper;
 
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -20,6 +20,8 @@ public class StopRepositoryImpl implements StopRepository {
     @Override
     public boolean existsById(Long id) {
         return jpaStopRepository.existsById(id);
+
+        
     }
 
     @Override
@@ -56,5 +58,12 @@ public class StopRepositoryImpl implements StopRepository {
     public List<Stop> findAllById(List<Long> ids) {
         return jpaStopRepository.findAllById(ids).stream()
             .map(StopMapper::toDomain).toList();
+    }
+
+    @Override
+    public Stop update(Stop stop) {
+        StopEntity stopEntity = StopMapper.toEntity(stop);
+        StopEntity updatedEntity = jpaStopRepository.save(stopEntity);
+        return StopMapper.toDomain(updatedEntity);
     }
 }

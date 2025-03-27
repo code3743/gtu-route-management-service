@@ -1,9 +1,6 @@
-version: '3.8'
-
 services:
   postgres:
     image: postgres:15
-    container_name: postgres_db
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
@@ -14,7 +11,16 @@ services:
      - postgres_data:/var/lib/postgresql/data
     networks:
      - app-network
-  
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    ports:
+      - "3000:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@test.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - postgres
 volumes:
   postgres_data:
 

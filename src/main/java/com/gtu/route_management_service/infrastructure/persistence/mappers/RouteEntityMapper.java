@@ -1,6 +1,8 @@
-package com.gtu.route_management_service.infrastructure.persistence;
+package com.gtu.route_management_service.infrastructure.persistence.mappers;
 
 import com.gtu.route_management_service.domain.model.Route;
+import com.gtu.route_management_service.infrastructure.persistence.entities.RouteEntity;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,8 +13,8 @@ public class RouteEntityMapper {
             route.getDescription(),
             route.getStartTime(),
             route.getEndTime(),
-            route.getNeighborhoods(),
-            route.getStopIds()
+            NeighborhoodMapper.toEntityList(route.getNeighborhood()),
+            StopMapper.toEntityList(route.getStop())
         );
     }
 
@@ -21,8 +23,8 @@ public class RouteEntityMapper {
             entity.getName(),
             entity.getStarTime(),
             entity.getEndTime(),
-            entity.getNeighborhoods(),
-            entity.getStopIds()
+            NeighborhoodMapper.toDomainList(entity.getNeighborhood()),
+            StopMapper.toDomainList(entity.getStop())
         );
     }
 }
