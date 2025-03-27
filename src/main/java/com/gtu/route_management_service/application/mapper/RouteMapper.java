@@ -1,5 +1,6 @@
-package com.gtu.route_management_service.application.dto;
+package com.gtu.route_management_service.application.mapper;
 
+import com.gtu.route_management_service.application.dto.RouteDTO;
 import com.gtu.route_management_service.domain.model.Route;
 import org.springframework.stereotype.Component;
 

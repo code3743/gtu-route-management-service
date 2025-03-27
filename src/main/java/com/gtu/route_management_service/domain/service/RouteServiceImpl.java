@@ -1,9 +1,8 @@
-package com.gtu.route_management_service.application.usecase;
+package com.gtu.route_management_service.domain.service;
 
 import com.gtu.route_management_service.domain.model.Route;
 import com.gtu.route_management_service.domain.repository.RouteRepository;
 import com.gtu.route_management_service.domain.repository.StopRepository;
-import com.gtu.route_management_service.domain.service.RouteService;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
