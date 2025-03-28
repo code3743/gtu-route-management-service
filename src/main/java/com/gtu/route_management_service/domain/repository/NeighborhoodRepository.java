@@ -13,4 +13,5 @@ public interface NeighborhoodRepository {
     List<Neighborhood> findAllById(List<Long> id);
     void deleteById(Long id);
     Neighborhood update(Neighborhood neighborhood);
+    List<Long> findAllExistingIds(List<Long> neighborhoodIds);
 } 
