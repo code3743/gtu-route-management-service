@@ -33,7 +33,11 @@ public class RouteUseCase {
         routeService.deleteRoute(id);
     }
 
-    public List<RouteDTO> findRoutesByName(String name) {
-        return RouteMapper.toDTOList(routeService.findRoutesByName(name));
+    public List<RouteDTO> getRouteByName(String name) {
+        return RouteMapper.toDTOList(routeService.getRouteByName(name));
+    }
+
+    public RouteDTO getRouteById(Long id) {
+        return RouteMapper.toDTO(routeService.getRouteById(id));
     }
 }

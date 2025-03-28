@@ -80,12 +80,18 @@ public class RouteServiceImpl implements RouteService {
     }
 
     @Override
-    public List<Route> findRoutesByName(String name) {
+    public List<Route> getRouteByName(String name) {
         Optional<Route> routes = routeRepository.findByName(name);
         if (routes.isEmpty()) {
             throw new IllegalArgumentException("No routes found with the name: " + name);
         }
         return List.of(routes.get());
+    }
+
+    @Override
+    public Route getRouteById(Long id) {
+        return routeRepository.existsById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Route does not exist"));
     }
     
 }

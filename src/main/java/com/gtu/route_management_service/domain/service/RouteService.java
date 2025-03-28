@@ -11,6 +11,7 @@ public interface RouteService {
     Route createRoute(Route domain);
     Route updateRoute(Route domain);
     void deleteRoute(Long id);
-    List<Route> findRoutesByName(String name);
+    List<Route> getRouteByName(String name);
+    Route getRouteById(Long id);
 
 }
