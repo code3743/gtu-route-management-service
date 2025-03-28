@@ -14,6 +14,7 @@ import java.util.List;
 public class RouteEntityMapper {
     public RouteEntity toEntity(Route route, List<NeighborhoodEntity> neighborhoodsIds,List<StopEntity> stopsIds) {
         return new RouteEntity(
+            route.getId(),
             route.getName(),
             route.getDescription(),
             route.getStartTime(),

@@ -13,6 +13,8 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 public class RouteEntity {
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,7 +39,8 @@ public class RouteEntity {
     @JoinTable(name = "route_stops", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "stop_id"))
     private List<StopEntity> stop = new ArrayList<>();
 
-    public RouteEntity(String name, String description, LocalTime startTime, LocalTime endTime, List<NeighborhoodEntity> neighborhoods, List<StopEntity> stopIds) {
+    public RouteEntity(Long id, String name, String description, LocalTime startTime, LocalTime endTime, List<NeighborhoodEntity> neighborhoods, List<StopEntity> stopIds) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.starTime = startTime;
