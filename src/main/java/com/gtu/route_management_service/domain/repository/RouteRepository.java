@@ -10,5 +10,6 @@ public interface RouteRepository {
     Route save(Route route);
     List<Route> findAll();
     Optional<Route> existsById(Long id);
+    void deleteById(Long id);
 
 }

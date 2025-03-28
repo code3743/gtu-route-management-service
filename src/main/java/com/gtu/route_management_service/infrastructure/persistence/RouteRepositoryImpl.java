@@ -52,4 +52,9 @@ public class RouteRepositoryImpl implements RouteRepository{
         return jpaRouteRepository.findByIdEntity(id)
             .map(RouteEntityMapper::toDomain);
     }
+
+    @Override
+    public void deleteById(Long id) {
+        jpaRouteRepository.deleteById(id);
+    }
 }

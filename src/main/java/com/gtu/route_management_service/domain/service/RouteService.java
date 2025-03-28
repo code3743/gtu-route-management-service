@@ -10,5 +10,6 @@ public interface RouteService {
     List<Route> getAllRoutes();
     Route createRoute(Route domain);
     Route updateRoute(Route domain);
+    void deleteRoute(Long id);
 
 }

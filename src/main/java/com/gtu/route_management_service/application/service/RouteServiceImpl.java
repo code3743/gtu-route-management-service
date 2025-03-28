@@ -69,5 +69,13 @@ public class RouteServiceImpl implements RouteService {
         }
         return routeRepository.save(domain);
     }
+
+    @Override
+    public void deleteRoute(Long id) {
+        routeRepository.deleteById(id);
+        if (!routeRepository.existsById(id).isPresent()) {
+            throw new IllegalArgumentException("Route does not exist");
+        }
+    }
     
 }

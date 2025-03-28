@@ -28,4 +28,8 @@ public class RouteUseCase {
     public RouteDTO updateRoute(RouteDTO routeDTO) {
         return RouteMapper.toDTO(routeService.updateRoute(RouteMapper.toDomain(routeDTO)));
     }
+
+    public void deleteRoute(Long id) {
+        routeService.deleteRoute(id);
+    }
 }

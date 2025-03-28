@@ -37,5 +37,11 @@ public class RouteController {
         return ResponseEntity.ok(updatedRoute);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteRoute(@PathVariable Long id) {
+        routeUseCase.deleteRoute(id);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }
