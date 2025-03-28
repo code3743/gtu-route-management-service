@@ -2,15 +2,18 @@ package com.gtu.route_management_service.application.mapper;
 
 import com.gtu.route_management_service.application.dto.StopDTO;
 import com.gtu.route_management_service.domain.model.Stop;
+
+import lombok.experimental.UtilityClass;
+
 import java.util.List;
 
 
+@UtilityClass
 public class StopMapper {
 
-    private StopMapper() {
-    }
 
-    public static StopDTO toDTO(Stop domain) {
+
+    public StopDTO toDTO(Stop domain) {
         return (domain == null) ? null : new StopDTO(
             domain.getId(),
             domain.getName(),
@@ -21,7 +24,7 @@ public class StopMapper {
         );
     }
 
-    public static Stop toDomain(StopDTO dto) {
+    public Stop toDomain(StopDTO dto) {
         return (dto == null) ? null : new Stop(
             dto.getId(),
             dto.getName(),
@@ -32,11 +35,11 @@ public class StopMapper {
         );
     }
 
-    public static List<StopDTO> toDTOList(List<Stop> domainList) {
+    public List<StopDTO> toDTOList(List<Stop> domainList) {
         return domainList == null ? List.of() : domainList.stream().map(StopMapper::toDTO).toList();
     }
 
-    public static List<Stop> toDomainList(List<StopDTO> dtoList) {
+    public List<Stop> toDomainList(List<StopDTO> dtoList) {
         return dtoList == null ? List.of() : dtoList.stream().map(StopMapper::toDomain).toList();
     }
 }

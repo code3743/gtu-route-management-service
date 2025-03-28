@@ -18,23 +18,21 @@ import org.springframework.stereotype.Repository;
 public class RouteRepositoryImpl implements RouteRepository{
 
     private final JpaRouteRepository jpaRouteRepository;
-    private final RouteEntityMapper routeEntityMapper;
 
-    public RouteRepositoryImpl(JpaRouteRepository jpaRouteRepository, RouteEntityMapper routeEntityMapper) {
+    public RouteRepositoryImpl(JpaRouteRepository jpaRouteRepository) {
         this.jpaRouteRepository = jpaRouteRepository;
-        this.routeEntityMapper = routeEntityMapper;
     }
 
     @Override
     public Route save(Route route, List<Neighborhood> neighborhoods,List<Stop> stops) {
-        RouteEntity routeEntity = routeEntityMapper.toEntity(route, NeighborhoodMapper.toEntityList(neighborhoods),StopMapper.toEntityList(stops));
+        RouteEntity routeEntity = RouteEntityMapper.toEntity(route, NeighborhoodMapper.toEntityList(neighborhoods),StopMapper.toEntityList(stops));
         RouteEntity savedEntity = jpaRouteRepository.save(routeEntity);
-        return routeEntityMapper.toDomain(savedEntity);
+        return RouteEntityMapper.toDomain(savedEntity);
     }
 
     @Override
     public Optional<Route> findByName(String name) {
         return jpaRouteRepository.findByName(name)
-        .map(routeEntityMapper::toDomain);
+        .map(RouteEntityMapper::toDomain);
     }
 }

@@ -2,9 +2,11 @@ package com.gtu.route_management_service.application.mapper;
 
 import com.gtu.route_management_service.application.dto.RouteDTO;
 import com.gtu.route_management_service.domain.model.Route;
-import org.springframework.stereotype.Component;
 
-@Component
+import lombok.experimental.UtilityClass;
+
+
+@UtilityClass
 public class RouteMapper {
     public Route toDomain(RouteDTO routeDTO){
         return new Route(

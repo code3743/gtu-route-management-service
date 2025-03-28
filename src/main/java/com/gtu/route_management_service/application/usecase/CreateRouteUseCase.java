@@ -12,18 +12,16 @@ import com.gtu.route_management_service.domain.service.RouteService;
 public class CreateRouteUseCase {
 
     private final RouteService routeService;
-    private final RouteMapper routeMapper; 
 
-    public CreateRouteUseCase(RouteService routeService, RouteMapper routeMapper) {
+    public CreateRouteUseCase(RouteService routeService) {
         this.routeService = routeService;
-        this.routeMapper = routeMapper;
     }
 
     @Transactional
     public RouteDTO execute(RouteDTO routeDTO) {
-        Route route = routeMapper.toDomain(routeDTO);
+        Route route = RouteMapper.toDomain(routeDTO);
         Route savedRoute = routeService.saveRoute(route);
 
-        return routeMapper.toDTO(savedRoute); 
+        return RouteMapper.toDTO(savedRoute); 
     }
 }

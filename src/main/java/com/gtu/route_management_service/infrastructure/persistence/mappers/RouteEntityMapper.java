@@ -5,11 +5,12 @@ import com.gtu.route_management_service.infrastructure.persistence.entities.Neig
 import com.gtu.route_management_service.infrastructure.persistence.entities.RouteEntity;
 import com.gtu.route_management_service.infrastructure.persistence.entities.StopEntity;
 
+import lombok.experimental.UtilityClass;
+
 import java.util.List;
 
-import org.springframework.stereotype.Component;
 
-@Component
+@UtilityClass
 public class RouteEntityMapper {
     public RouteEntity toEntity(Route route, List<NeighborhoodEntity> neighborhoodsIds,List<StopEntity> stopsIds) {
         return new RouteEntity(

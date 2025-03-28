@@ -13,16 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/routes")
 public class RouteController {
     private final RouteService routeService;
-    private final RouteMapper routeMapper;
 
-    public RouteController(RouteService routeService, RouteMapper routeMapper) {
+    public RouteController(RouteService routeService) {
         this.routeService = routeService;
-        this.routeMapper = routeMapper;
     }
 
     @PostMapping
     public ResponseEntity<String> createRoute(@Valid @RequestBody RouteDTO routeDTO) {
-        Route route = routeMapper.toDomain(routeDTO);
+        Route route = RouteMapper.toDomain(routeDTO);
         routeService.validateRoute(route);
 
         Route savedRoute = routeService.saveRoute(route);
