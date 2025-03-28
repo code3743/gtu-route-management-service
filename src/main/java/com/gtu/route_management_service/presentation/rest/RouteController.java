@@ -1,9 +1,7 @@
 package com.gtu.route_management_service.presentation.rest;
 
 import com.gtu.route_management_service.application.dto.RouteDTO;
-import com.gtu.route_management_service.application.mapper.RouteMapper;
-import com.gtu.route_management_service.domain.model.Route;
-import com.gtu.route_management_service.domain.service.RouteService;
+import com.gtu.route_management_service.application.usecase.RouteUseCase;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -15,28 +13,29 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/routes")
 public class RouteController {
-    private final RouteService routeService;
+    private final RouteUseCase routeUseCase;
 
-    public RouteController(RouteService routeService) {
-        this.routeService = routeService;
+    public RouteController(RouteUseCase routeUseCase) {
+        this.routeUseCase = routeUseCase;
     }
 
     @PostMapping
-    public ResponseEntity<String> createRoute(@Valid @RequestBody RouteDTO routeDTO) {
-        Route route = RouteMapper.toDomain(routeDTO);
-        routeService.validateRoute(route);
-
-        Route savedRoute = routeService.saveRoute(route);
-
-        return ResponseEntity.ok("Route created successfully: " + savedRoute.getName());
+    public ResponseEntity<RouteDTO> createRoute(@Valid @RequestBody RouteDTO routeDTO) {
+        RouteDTO createdRoute = routeUseCase.createRoute(routeDTO);
+        return ResponseEntity.status(201).body(createdRoute);
     }
 
     @GetMapping
     public ResponseEntity<List<RouteDTO>> getAllRoutes() {
-        List<Route> routes = routeService.getAllRoutes();
-        List<RouteDTO> routeDTOs = routes.stream()
-                                         .map(RouteMapper::toDTO)
-                                         .toList();
-        return ResponseEntity.ok(routeDTOs);
+        return ResponseEntity.ok(routeUseCase.getAllRoutes());          
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RouteDTO> updateRoute(@PathVariable Long id, @Valid @RequestBody RouteDTO routeDTO) {
+        routeDTO.setId(id);
+        RouteDTO updatedRoute = routeUseCase.updateRoute(routeDTO);
+        return ResponseEntity.ok(updatedRoute);
+    }
+
+
 }

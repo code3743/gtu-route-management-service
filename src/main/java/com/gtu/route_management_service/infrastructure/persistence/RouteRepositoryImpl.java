@@ -46,4 +46,10 @@ public class RouteRepositoryImpl implements RouteRepository{
             .map(RouteEntityMapper::toDomain)
             .toList();
     }
+
+    @Override
+    public Optional<Route> existsById(Long id) {
+        return jpaRouteRepository.findByIdEntity(id)
+            .map(RouteEntityMapper::toDomain);
+    }
 }

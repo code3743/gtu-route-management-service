@@ -51,5 +51,23 @@ public class RouteServiceImpl implements RouteService {
     public List<Route> getAllRoutes() {
         return routeRepository.findAll();
     }
+
+    @Override
+    public Route createRoute(Route route) {
+        if (routeRepository.findByName(route.getName()).isPresent()) {
+            throw new IllegalArgumentException("The route name already exists: " + route.getName());
+        }
+        return routeRepository.save(route);
+    }
+
+    @Override
+    public Route updateRoute(Route domain) {
+        Route existingRoute = routeRepository.existsById(domain.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Route does not exist"));
+        if (!existingRoute.getId().equals(domain.getId())) {
+            throw new IllegalArgumentException("The route name already exists: " + domain.getName());
+        }
+        return routeRepository.save(domain);
+    }
     
 }

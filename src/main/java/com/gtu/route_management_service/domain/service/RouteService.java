@@ -8,5 +8,7 @@ public interface RouteService {
     void validateRoute(Route route);
     Route saveRoute(Route route);
     List<Route> getAllRoutes();
+    Route createRoute(Route domain);
+    Route updateRoute(Route domain);
 
 }
