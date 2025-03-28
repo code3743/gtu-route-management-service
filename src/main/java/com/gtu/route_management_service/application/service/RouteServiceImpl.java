@@ -72,10 +72,10 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void deleteRoute(Long id) {
-        routeRepository.deleteById(id);
         if (!routeRepository.existsById(id).isPresent()) {
             throw new IllegalArgumentException("Route does not exist");
         }
+        routeRepository.deleteById(id);
     }
     
 }
