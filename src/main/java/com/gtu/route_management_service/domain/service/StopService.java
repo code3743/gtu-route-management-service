@@ -9,4 +9,5 @@ public interface StopService {
     List<Stop> getAllStops();
     Optional<Stop> getStopById(Long id);
     void deleteStop(Long id);
+    Stop updateStop(Stop stop);
 }

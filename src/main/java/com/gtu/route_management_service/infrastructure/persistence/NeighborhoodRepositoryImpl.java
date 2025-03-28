@@ -42,7 +42,7 @@ public class NeighborhoodRepositoryImpl implements NeighborhoodRepository{
 
     @Override
     public Neighborhood update(Neighborhood neighborhood) {
-       throw new UnsupportedOperationException("Not implemented yet");
+       return NeighborhoodMapper.toDomain(jpaNeighborhoodRepository.save(NeighborhoodMapper.toEntity(neighborhood)));   
     }
 
 

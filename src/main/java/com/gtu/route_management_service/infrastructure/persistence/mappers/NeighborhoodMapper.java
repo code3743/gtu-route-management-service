@@ -17,7 +17,7 @@ public class NeighborhoodMapper {
     }
 
     public NeighborhoodEntity toEntity(Neighborhood domain) {
-        return (domain == null) ? null : new NeighborhoodEntity(domain.getName()); 
+        return (domain == null) ? null : new NeighborhoodEntity(domain.getId(),domain.getName()); 
     }
 
     public List<Neighborhood> toDomainList(List<NeighborhoodEntity> entities) {

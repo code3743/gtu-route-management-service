@@ -40,4 +40,12 @@ public class NeighborhoodServiceImpl implements NeighborhoodService {
     public Optional<Neighborhood> getNeighborhoodById(Long id) {
         return neighborhoodRepository.findById(id);
     }
+
+    @Override
+    public Neighborhood updateNeighborhood(Neighborhood neighborhood) {
+        if (!neighborhoodRepository.existsById(neighborhood.getId())) {
+            throw new IllegalArgumentException("Neighborhood does not exist");
+        }
+        return neighborhoodRepository.update(neighborhood);
+    }
 }

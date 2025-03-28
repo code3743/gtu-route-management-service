@@ -1,9 +1,8 @@
 package com.gtu.route_management_service.presentation.rest;
 
 import com.gtu.route_management_service.application.dto.NeighborhoodDTO;
-import com.gtu.route_management_service.application.mapper.NeighborhoodMapper;
-import com.gtu.route_management_service.domain.model.Neighborhood;
-import com.gtu.route_management_service.domain.service.NeighborhoodService;
+import com.gtu.route_management_service.application.usecase.NeighborhoodUseCase;
+
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,39 +13,42 @@ import java.util.List;
 @RequestMapping("/api/neighborhoods")
 public class NeighborhoodController {
 
-    private final NeighborhoodService neighborhoodService;
+    private final NeighborhoodUseCase neighborhoodUseCase;
 
-    public NeighborhoodController(NeighborhoodService neighborhoodService) {
-        this.neighborhoodService = neighborhoodService;
+    public NeighborhoodController(NeighborhoodUseCase neighborhoodUseCase) {
+        this.neighborhoodUseCase = neighborhoodUseCase;
     }
 
     @GetMapping
     public ResponseEntity<List<NeighborhoodDTO>> getAllNeighborhoods() {
-        List<NeighborhoodDTO> neighborhoods = neighborhoodService.getAllNeighborhoods()
-                .stream()
-                .map(NeighborhoodMapper::toDTO)
-                .toList();
-        return ResponseEntity.ok(neighborhoods);
+       return ResponseEntity.ok(neighborhoodUseCase.getAllNeighborhoods());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<NeighborhoodDTO> getNeighborhoodById(@PathVariable Long id) {
-        return neighborhoodService.getNeighborhoodById(id)
-                .map(neighborhood -> ResponseEntity.ok(NeighborhoodMapper.toDTO(neighborhood)))
-                .orElse(ResponseEntity.notFound().build());
+        NeighborhoodDTO neighborhoodDTO = neighborhoodUseCase.getNeighborhoodById(id);
+        if (neighborhoodDTO == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(neighborhoodDTO);
     }
 
     @PostMapping
     public ResponseEntity<NeighborhoodDTO> createNeighborhood(@RequestBody NeighborhoodDTO neighborhoodDTO) {
-        Neighborhood neighborhood = NeighborhoodMapper.toDomain(neighborhoodDTO);
-        Neighborhood savedNeighborhood = neighborhoodService.createNeighborhood(neighborhood);
-        return ResponseEntity.ok(NeighborhoodMapper.toDTO(savedNeighborhood));
+        NeighborhoodDTO createdNeighborhood = neighborhoodUseCase.createNeighborhood(neighborhoodDTO);
+        return ResponseEntity.status(201).body(createdNeighborhood);
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteNeighborhood(@PathVariable Long id) {
-        neighborhoodService.deleteNeighborhood(id);
+        neighborhoodUseCase.deleteNeighborhood(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    public ResponseEntity<NeighborhoodDTO> updateNeighborhood(@RequestBody NeighborhoodDTO neighborhoodDTO) {
+        NeighborhoodDTO updatedNeighborhood = neighborhoodUseCase.updateNeighborhood(neighborhoodDTO);
+        return ResponseEntity.ok(updatedNeighborhood);
     }
 }

@@ -11,4 +11,5 @@ public interface NeighborhoodService {
     List<Neighborhood> getNeighborhoodsByIds(List<Long> id);
     Optional<Neighborhood> getNeighborhoodById(Long id);
     void deleteNeighborhood(Long id);
+    Neighborhood updateNeighborhood(Neighborhood neighborhood);
 }

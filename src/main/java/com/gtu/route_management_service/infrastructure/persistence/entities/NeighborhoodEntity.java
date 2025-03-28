@@ -19,10 +19,6 @@ public class NeighborhoodEntity {
     @Column(nullable = false, unique = true)
     private String name;
 
-    public NeighborhoodEntity(String name) {
-        this.name = name;
-    }
-
     public NeighborhoodEntity(Long id) {
         this.id = id;
     }
