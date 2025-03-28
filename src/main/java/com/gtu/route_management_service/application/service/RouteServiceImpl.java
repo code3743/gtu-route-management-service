@@ -1,8 +1,6 @@
 package com.gtu.route_management_service.application.service;
 
-import com.gtu.route_management_service.domain.model.Neighborhood;
 import com.gtu.route_management_service.domain.model.Route;
-import com.gtu.route_management_service.domain.model.Stop;
 import com.gtu.route_management_service.domain.repository.RouteRepository;
 import com.gtu.route_management_service.domain.repository.StopRepository;
 import com.gtu.route_management_service.domain.repository.NeighborhoodRepository;
@@ -29,23 +27,24 @@ public class RouteServiceImpl implements RouteService {
             throw new IllegalArgumentException("The route name already exists: " + route.getName());
         }
 
+        List<Long> stopIds = route.getStopsIds();
+        List<Long> existingStopIds = stopRepository.findAllExistingIds(stopIds);
+        if (existingStopIds.size() != stopIds.size()) {
+            throw new IllegalArgumentException("Some stops do not exist: " + stopIds);
+        }
+
+        List<Long> neighborhoodIds = route.getNeighborhoodIds();
+        List<Long> existingNeighborhoodIds = neighborhoodRepository.findAllExistingIds(neighborhoodIds);
+        if (existingNeighborhoodIds.size() != neighborhoodIds.size()) {
+            throw new IllegalArgumentException("Some neighborhoods do not exist: " + neighborhoodIds);
+        }
+
     }
 
     @Override
     public Route saveRoute(Route route) {
         validateRoute(route);
-        List<Long> neighborhoodsIds = route.getNeighborhoodsIds();
-        List<Neighborhood> neighborhoods = neighborhoodRepository.findAllById(neighborhoodsIds);
-        if (neighborhoods.size() != neighborhoodsIds.size()) {
-            throw new IllegalArgumentException("Some neighborhoods do not exist: " + neighborhoodsIds);
-        }
-        System.out.println("neighborhoods: " + neighborhoods);
-        List<Long> stopIds = route.getStopsIds();
-        List<Stop> stops = stopRepository.findAllById(stopIds);
-        if (stops.size() != stopIds.size()) {
-            throw new IllegalArgumentException("Some stops do not exist: " + stopIds);
-        }
-        return routeRepository.save(route, neighborhoods,stops);
+        return routeRepository.save(route);
     }
     
 }

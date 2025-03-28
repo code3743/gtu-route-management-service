@@ -56,4 +56,11 @@ public class NeighborhoodRepositoryImpl implements NeighborhoodRepository{
         return jpaNeighborhoodRepository.findById(id).map(NeighborhoodMapper::toDomain);
     }
 
+    @Override
+    public List<Long> findAllExistingIds(List<Long> neighborhoodIds) {
+        return neighborhoodIds.stream()
+            .filter(jpaNeighborhoodRepository::existsById)
+            .toList();
+    }
+
 }

@@ -22,4 +22,8 @@ public class NeighborhoodEntity {
     public NeighborhoodEntity(String name) {
         this.name = name;
     }
+
+    public NeighborhoodEntity(Long id) {
+        this.id = id;
+    }
 }

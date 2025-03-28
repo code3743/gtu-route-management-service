@@ -25,7 +25,7 @@ public class RouteDTO {
     private LocalTime endTime;
 
     @NotEmpty(message = "The list of neighbothoods cannot be empty")
-    private List<Long> neighborhoods;
+    private List<Long> neighborhoodIds;
 
     @NotEmpty(message = "The stop list cannot be empty")
     @Size(min = 2, message = "The route must have at least two stops")

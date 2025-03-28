@@ -14,7 +14,7 @@ public class RouteMapper {
             routeDTO.getDescription(),
             routeDTO.getStartTime(),
             routeDTO.getEndTime(),
-            routeDTO.getNeighborhoods(),
+            routeDTO.getNeighborhoodIds(),
             routeDTO.getStops()
         );
     }
@@ -25,7 +25,7 @@ public class RouteMapper {
             route.getDescription(),
             route.getStartTime(),
             route.getEndTime(),
-            route.getNeighborhoodsIds(),
+            route.getNeighborhoodIds(),
             route.getStopsIds()
         );
     }

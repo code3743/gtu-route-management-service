@@ -42,4 +42,8 @@ public class StopEntity {
         this.latitude = latitude;
         this.longitude = longitude;
     }
+
+    public StopEntity(Long id) {
+        this.id = id;
+    }
 }
