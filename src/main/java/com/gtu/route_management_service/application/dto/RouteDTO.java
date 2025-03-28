@@ -13,6 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RouteDTO {
+    private Long id;
+    
     @NotEmpty(message = "The route name cannot be empty")
     private String name;
 

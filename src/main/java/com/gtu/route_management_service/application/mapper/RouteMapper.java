@@ -10,6 +10,7 @@ import lombok.experimental.UtilityClass;
 public class RouteMapper {
     public Route toDomain(RouteDTO routeDTO){
         return new Route(
+            routeDTO.getId(),
             routeDTO.getName(),
             routeDTO.getDescription(),
             routeDTO.getStartTime(),
@@ -21,6 +22,7 @@ public class RouteMapper {
 
     public RouteDTO toDTO(Route route){
         return new RouteDTO(
+            route.getId(),
             route.getName(),
             route.getDescription(),
             route.getStartTime(),

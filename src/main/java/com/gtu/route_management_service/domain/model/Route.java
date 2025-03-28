@@ -16,7 +16,8 @@ public class Route {
 
     }
 
-    public Route(String name, String description, LocalTime startTime, LocalTime endTime, List<Long> neighborhoodIds, List<Long> stopIds) {
+    public Route(Long id, String name, String description, LocalTime startTime, LocalTime endTime, List<Long> neighborhoodIds, List<Long> stopIds) {
+        this.id = id;
         this.name = name;
         this.description = description;
         this.startTime = startTime;
