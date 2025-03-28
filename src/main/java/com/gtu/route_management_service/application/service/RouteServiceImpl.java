@@ -8,6 +8,7 @@ import com.gtu.route_management_service.domain.service.RouteService;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RouteServiceImpl implements RouteService {
@@ -76,6 +77,15 @@ public class RouteServiceImpl implements RouteService {
             throw new IllegalArgumentException("Route does not exist");
         }
         routeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Route> findRoutesByName(String name) {
+        Optional<Route> routes = routeRepository.findByName(name);
+        if (routes.isEmpty()) {
+            throw new IllegalArgumentException("No routes found with the name: " + name);
+        }
+        return List.of(routes.get());
     }
     
 }

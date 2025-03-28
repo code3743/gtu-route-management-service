@@ -43,5 +43,11 @@ public class RouteController {
         return ResponseEntity.noContent().build();
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<RouteDTO>> findRoutesByName(@RequestParam String name) {
+        List<RouteDTO> routes = routeUseCase.findRoutesByName(name);
+        return ResponseEntity.ok(routes);
+    }
+
 
 }
