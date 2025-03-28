@@ -46,5 +46,10 @@ public class RouteServiceImpl implements RouteService {
         validateRoute(route);
         return routeRepository.save(route);
     }
+
+    @Override
+    public List<Route> getAllRoutes() {
+        return routeRepository.findAll();
+    }
     
 }

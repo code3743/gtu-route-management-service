@@ -39,4 +39,11 @@ public class RouteRepositoryImpl implements RouteRepository{
         return jpaRouteRepository.findByEntityName(name)
             .map(RouteEntityMapper::toDomain);
     }
+
+    @Override
+    public List<Route> findAll() {
+        return jpaRouteRepository.findAll().stream()
+            .map(RouteEntityMapper::toDomain)
+            .toList();
+    }
 }

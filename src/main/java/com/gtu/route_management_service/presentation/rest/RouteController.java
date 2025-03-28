@@ -5,6 +5,9 @@ import com.gtu.route_management_service.application.mapper.RouteMapper;
 import com.gtu.route_management_service.domain.model.Route;
 import com.gtu.route_management_service.domain.service.RouteService;
 import jakarta.validation.Valid;
+
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +28,15 @@ public class RouteController {
 
         Route savedRoute = routeService.saveRoute(route);
 
-        return ResponseEntity.ok("Route created successfully: " +  savedRoute.getName());
+        return ResponseEntity.ok("Route created successfully: " + savedRoute.getName());
     }
-    
+
+    @GetMapping
+    public ResponseEntity<List<RouteDTO>> getAllRoutes() {
+        List<Route> routes = routeService.getAllRoutes();
+        List<RouteDTO> routeDTOs = routes.stream()
+                                         .map(RouteMapper::toDTO)
+                                         .toList();
+        return ResponseEntity.ok(routeDTOs);
+    }
 }
