@@ -9,19 +9,19 @@ public class Route {
     private String description;
     private LocalTime startTime;
     private LocalTime endTime;
-    private List<Long> neighborhoodsIds;
+    private List<Long> neighborhoodIds;
     private List<Long> stopsIds;
 
     public Route(){
 
     }
 
-    public Route(String name, String description, LocalTime startTime, LocalTime endTime, List<Long> neighborhoodsIds, List<Long> stopIds) {
+    public Route(String name, String description, LocalTime startTime, LocalTime endTime, List<Long> neighborhoodIds, List<Long> stopIds) {
         this.name = name;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.neighborhoodsIds = neighborhoodsIds;
+        this.neighborhoodIds = neighborhoodIds;
         this.stopsIds = stopIds;
     }
 
@@ -65,12 +65,12 @@ public class Route {
         this.endTime = endTime;
     }
 
-    public List<Long> getNeighborhoodsIds(){
-        return neighborhoodsIds;
+    public List<Long> getNeighborhoodIds(){
+        return neighborhoodIds;
     }
 
-    public void setNeighborhoods(List<Long> neighborhoodsIds){
-        this.neighborhoodsIds = neighborhoodsIds;
+    public void setNeighborhoodIds(List<Long> neighborhoodIds){
+        this.neighborhoodIds = neighborhoodIds;
     }
 
     public List<Long> getStopsIds(){

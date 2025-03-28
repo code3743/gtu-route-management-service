@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -30,11 +31,11 @@ public class RouteEntity {
 
     @ManyToMany
     @JoinTable(name = "route_neighborhoods", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "neighborhood_id"))
-    private List<NeighborhoodEntity> neighborhood;
+    private List<NeighborhoodEntity> neighborhood = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "route_stops", joinColumns = @JoinColumn(name = "route_id"), inverseJoinColumns = @JoinColumn(name = "stop_id"))
-    private List<StopEntity> stop;
+    private List<StopEntity> stop = new ArrayList<>();
 
     public RouteEntity(String name, String description, LocalTime startTime, LocalTime endTime, List<NeighborhoodEntity> neighborhoods, List<StopEntity> stopIds) {
         this.name = name;
