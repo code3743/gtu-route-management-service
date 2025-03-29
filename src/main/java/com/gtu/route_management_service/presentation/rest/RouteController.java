@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/api/routes")
+@RequestMapping("/routes")
 public class RouteController {
     private final RouteUseCase routeUseCase;
 
