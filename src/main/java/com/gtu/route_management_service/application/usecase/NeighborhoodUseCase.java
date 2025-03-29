@@ -42,5 +42,8 @@ public class NeighborhoodUseCase {
         return NeighborhoodMapper.toDTOList(neighborhoodService.getNeighborhoodsByIds(ids));
     }
 
+    public List<NeighborhoodDTO> searchByName(String name) {
+        return NeighborhoodMapper.toDTOList(neighborhoodService.searchByName(name));
+    }
 
 }

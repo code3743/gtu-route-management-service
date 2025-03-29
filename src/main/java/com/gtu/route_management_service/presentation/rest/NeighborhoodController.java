@@ -22,7 +22,7 @@ public class NeighborhoodController {
     @GetMapping
     public ResponseEntity<List<NeighborhoodDTO>> getAllNeighborhoods(@RequestParam(value = "search", required = false) String search) {
         if (search != null) {
-            List<NeighborhoodDTO> neighborhoods = neighborhoodUseCase.getNeighborhoodsByIds(List.of(Long.parseLong(search)));
+            List<NeighborhoodDTO> neighborhoods = neighborhoodUseCase.searchByName(search);
             return ResponseEntity.ok(neighborhoods);
         }
         List<NeighborhoodDTO> neighborhoods = neighborhoodUseCase.getAllNeighborhoods();
