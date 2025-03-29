@@ -47,4 +47,10 @@ public class StopController {
         StopDTO updatedStop = stopUseCase.updateStop(stopDTO);
         return ResponseEntity.ok(new ResponseDTO("Stop updated successfully", updatedStop, 200));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDTO> searchByName(@RequestParam String name) {
+        List<StopDTO> stops = stopUseCase.searchByName(name);
+        return ResponseEntity.ok(new ResponseDTO("Stops retrieved successfully", stops, 200));
+    }
 }
