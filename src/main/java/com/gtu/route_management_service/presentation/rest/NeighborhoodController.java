@@ -1,6 +1,7 @@
 package com.gtu.route_management_service.presentation.rest;
 
 import com.gtu.route_management_service.application.dto.NeighborhoodDTO;
+import com.gtu.route_management_service.application.dto.ResponseDTO;
 import com.gtu.route_management_service.application.usecase.NeighborhoodUseCase;
 
 
@@ -20,40 +21,40 @@ public class NeighborhoodController {
     }
 
     @GetMapping
-    public ResponseEntity<List<NeighborhoodDTO>> getAllNeighborhoods(@RequestParam(value = "search", required = false) String search) {
+    public ResponseEntity<ResponseDTO> getAllNeighborhoods(@RequestParam(value = "search", required = false) String search) {
         if (search != null) {
             List<NeighborhoodDTO> neighborhoods = neighborhoodUseCase.searchByName(search);
-            return ResponseEntity.ok(neighborhoods);
+            return ResponseEntity.ok(new ResponseDTO("Neighborhoods retrieved successfully", neighborhoods, 200));
         }
         List<NeighborhoodDTO> neighborhoods = neighborhoodUseCase.getAllNeighborhoods();
-        return ResponseEntity.ok(neighborhoods);
+        return ResponseEntity.ok(new ResponseDTO("Neighborhoods retrieved successfully", neighborhoods, 200));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NeighborhoodDTO> getNeighborhoodById(@PathVariable Long id) {
+    public ResponseEntity<ResponseDTO> getNeighborhoodById(@PathVariable Long id) {
         NeighborhoodDTO neighborhoodDTO = neighborhoodUseCase.getNeighborhoodById(id);
         if (neighborhoodDTO == null) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.status(404).body(new ResponseDTO("Neighborhood not found", null, 404));
         }
-        return ResponseEntity.ok(neighborhoodDTO);
+        return ResponseEntity.ok(new ResponseDTO("Neighborhood retrieved successfully", neighborhoodDTO, 0));
     }
 
     @PostMapping
-    public ResponseEntity<NeighborhoodDTO> createNeighborhood(@RequestBody NeighborhoodDTO neighborhoodDTO) {
+    public ResponseEntity<ResponseDTO> createNeighborhood(@RequestBody NeighborhoodDTO neighborhoodDTO) {
         NeighborhoodDTO createdNeighborhood = neighborhoodUseCase.createNeighborhood(neighborhoodDTO);
-        return ResponseEntity.status(201).body(createdNeighborhood);
+        return ResponseEntity.status(201).body(new ResponseDTO("Neighborhood created successfully", createdNeighborhood, 201));
     }
 
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteNeighborhood(@PathVariable Long id) {
+    public ResponseEntity<ResponseDTO> deleteNeighborhood(@PathVariable Long id) {
         neighborhoodUseCase.deleteNeighborhood(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new ResponseDTO("Neighborhood deleted successfully", null, 200));
     }
 
     @PutMapping
-    public ResponseEntity<NeighborhoodDTO> updateNeighborhood(@RequestBody NeighborhoodDTO neighborhoodDTO) {
+    public ResponseEntity<ResponseDTO> updateNeighborhood(@RequestBody NeighborhoodDTO neighborhoodDTO) {
         NeighborhoodDTO updatedNeighborhood = neighborhoodUseCase.updateNeighborhood(neighborhoodDTO);
-        return ResponseEntity.ok(updatedNeighborhood);
+        return ResponseEntity.ok(new ResponseDTO("Neighborhood updated successfully", updatedNeighborhood, 200));
     }
 }
