@@ -49,4 +49,10 @@ public class NeighborhoodController {
         NeighborhoodDTO updatedNeighborhood = neighborhoodUseCase.updateNeighborhood(neighborhoodDTO);
         return ResponseEntity.ok(new ResponseDTO("Neighborhood updated successfully", updatedNeighborhood, 200));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<ResponseDTO> searchByName(@RequestParam String name) {
+        List<NeighborhoodDTO> neighborhoods = neighborhoodUseCase.searchByName(name);
+        return ResponseEntity.ok(new ResponseDTO("Neighborhoods retrieved successfully", neighborhoods, 200));
+    }
 }
