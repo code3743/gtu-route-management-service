@@ -2,9 +2,11 @@ package com.gtu.route_management_service.infrastructure.persistence;
 
 import com.gtu.route_management_service.domain.model.Route;
 import com.gtu.route_management_service.domain.repository.RouteRepository;
+import com.gtu.route_management_service.infrastructure.persistence.entities.NeighborhoodEntity;
 import com.gtu.route_management_service.infrastructure.persistence.entities.RouteEntity;
+import com.gtu.route_management_service.infrastructure.persistence.entities.StopEntity;
 import com.gtu.route_management_service.infrastructure.persistence.mappers.RouteEntityMapper;
-
+import java.util.List;
 import java.util.Optional;
 import org.springframework.stereotype.Repository;
 
@@ -12,23 +14,47 @@ import org.springframework.stereotype.Repository;
 public class RouteRepositoryImpl implements RouteRepository{
 
     private final JpaRouteRepository jpaRouteRepository;
-    private final RouteEntityMapper routeEntityMapper;
 
-    public RouteRepositoryImpl(JpaRouteRepository jpaRouteRepository, RouteEntityMapper routeEntityMapper) {
+    public RouteRepositoryImpl(JpaRouteRepository jpaRouteRepository) {
         this.jpaRouteRepository = jpaRouteRepository;
-        this.routeEntityMapper = routeEntityMapper;
     }
 
     @Override
     public Route save(Route route) {
-        RouteEntity routeEntity = routeEntityMapper.toEntity(route);
+        List<NeighborhoodEntity> neighborhoodEntities = route.getNeighborhoodIds().stream()
+            .map(NeighborhoodEntity::new)
+            .toList();
+       
+        List<StopEntity> stopEntities = route.getStopsIds().stream()
+            .map(StopEntity::new)
+            .toList();
+
+        RouteEntity routeEntity = RouteEntityMapper.toEntity(route, neighborhoodEntities, stopEntities);
         RouteEntity savedEntity = jpaRouteRepository.save(routeEntity);
-        return routeEntityMapper.toDomain(savedEntity);
+        return RouteEntityMapper.toDomain(savedEntity);
     }
 
     @Override
     public Optional<Route> findByName(String name) {
-        return jpaRouteRepository.findByName(name)
-        .map(routeEntityMapper::toDomain);
+        return jpaRouteRepository.findByEntityName(name)
+            .map(RouteEntityMapper::toDomain);
+    }
+
+    @Override
+    public List<Route> findAll() {
+        return jpaRouteRepository.findAll().stream()
+            .map(RouteEntityMapper::toDomain)
+            .toList();
+    }
+
+    @Override
+    public Optional<Route> existsById(Long id) {
+        return jpaRouteRepository.findByIdEntity(id)
+            .map(RouteEntityMapper::toDomain);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        jpaRouteRepository.deleteById(id);
     }
 }

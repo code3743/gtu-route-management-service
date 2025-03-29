@@ -43,4 +43,21 @@ public class StopServiceImpl implements StopService {
     public void deleteStop(Long id) {
         stopRepository.deleteById(id);
     }
+
+    @Override
+    public Stop updateStop(Stop stop) {
+        if (!stopRepository.existsById(stop.getId())) {
+            throw new IllegalArgumentException("Stop does not exist");
+        }
+
+        if (!neighborhoodRepository.existsById(stop.getNeighborhoodId())) {
+            throw new IllegalArgumentException("Neighborhood does not exist");
+        }
+        return stopRepository.update(stop);
+    }
+
+    @Override
+    public List<Stop> searchByName(String name) {
+        return stopRepository.searchByName(name);
+    }
 }

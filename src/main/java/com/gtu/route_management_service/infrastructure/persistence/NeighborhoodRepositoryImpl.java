@@ -31,8 +31,8 @@ public class NeighborhoodRepositoryImpl implements NeighborhoodRepository{
     }
 
     @Override
-    public Optional<Neighborhood> findAllById(Long id) {
-        return jpaNeighborhoodRepository.findById(id).map(NeighborhoodMapper::toDomain);
+    public List<Neighborhood> findAllById(List<Long> id) {
+        return jpaNeighborhoodRepository.findAllById(id).stream().map(NeighborhoodMapper::toDomain).toList();
     }
 
     @Override
@@ -42,13 +42,32 @@ public class NeighborhoodRepositoryImpl implements NeighborhoodRepository{
 
     @Override
     public Neighborhood update(Neighborhood neighborhood) {
-       throw new UnsupportedOperationException("Not implemented yet");
+       return NeighborhoodMapper.toDomain(jpaNeighborhoodRepository.save(NeighborhoodMapper.toEntity(neighborhood)));   
     }
 
 
     @Override
     public boolean existsById(Long id) {
         return jpaNeighborhoodRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<Neighborhood> findById(Long id) {
+        return jpaNeighborhoodRepository.findById(id).map(NeighborhoodMapper::toDomain);
+    }
+
+    @Override
+    public List<Long> findAllExistingIds(List<Long> neighborhoodIds) {
+        return neighborhoodIds.stream()
+            .filter(jpaNeighborhoodRepository::existsById)
+            .toList();
+    }
+
+    @Override
+    public List<Neighborhood> searchByName(String name) {
+        return jpaNeighborhoodRepository.searchByName(name).stream()
+            .map(NeighborhoodMapper::toDomain)
+            .toList();
     }
 
 }

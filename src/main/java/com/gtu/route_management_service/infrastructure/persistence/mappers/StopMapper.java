@@ -27,6 +27,7 @@ public class StopMapper {
             return null;
         }
         return new StopEntity(
+            domain.getId(),
             domain.getName(),
             domain.getDescription(),
             domain.getNeighborhoodId(), 
