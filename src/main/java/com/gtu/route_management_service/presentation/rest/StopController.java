@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/stops")
+@RequestMapping("/stops")
 public class StopController {
     private final StopUseCase stopUseCase;
 
