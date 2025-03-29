@@ -55,4 +55,9 @@ public class StopServiceImpl implements StopService {
         }
         return stopRepository.update(stop);
     }
+
+    @Override
+    public List<Stop> searchByName(String name) {
+        return stopRepository.searchByName(name);
+    }
 }

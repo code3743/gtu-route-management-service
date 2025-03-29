@@ -20,8 +20,13 @@ public class NeighborhoodController {
     }
 
     @GetMapping
-    public ResponseEntity<List<NeighborhoodDTO>> getAllNeighborhoods() {
-       return ResponseEntity.ok(neighborhoodUseCase.getAllNeighborhoods());
+    public ResponseEntity<List<NeighborhoodDTO>> getAllNeighborhoods(@RequestParam(value = "search", required = false) String search) {
+        if (search != null) {
+            List<NeighborhoodDTO> neighborhoods = neighborhoodUseCase.getNeighborhoodsByIds(List.of(Long.parseLong(search)));
+            return ResponseEntity.ok(neighborhoods);
+        }
+        List<NeighborhoodDTO> neighborhoods = neighborhoodUseCase.getAllNeighborhoods();
+        return ResponseEntity.ok(neighborhoods);
     }
 
     @GetMapping("/{id}")

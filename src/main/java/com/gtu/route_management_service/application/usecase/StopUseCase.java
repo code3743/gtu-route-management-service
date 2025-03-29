@@ -35,4 +35,8 @@ public class StopUseCase {
     public StopDTO updateStop(StopDTO stopDTO) {
         return StopMapper.toDTO(stopService.updateStop(StopMapper.toDomain(stopDTO)));
     }
+
+    public List<StopDTO> searchByName(String name) {
+        return StopMapper.toDTOList(stopService.searchByName(name));
+    }
 }

@@ -14,4 +14,5 @@ public interface NeighborhoodRepository {
     void deleteById(Long id);
     Neighborhood update(Neighborhood neighborhood);
     List<Long> findAllExistingIds(List<Long> neighborhoodIds);
+    List<Neighborhood> searchByName(String name);
 } 

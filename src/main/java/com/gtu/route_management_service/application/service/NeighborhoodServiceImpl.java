@@ -48,4 +48,9 @@ public class NeighborhoodServiceImpl implements NeighborhoodService {
         }
         return neighborhoodRepository.update(neighborhood);
     }
+
+    @Override
+    public List<Neighborhood> searchByName(String name) {
+        return neighborhoodRepository.searchByName(name);
+    }
 }

@@ -64,4 +64,10 @@ public class StopRepositoryImpl implements StopRepository {
     public Stop update(Stop stop) {
        return StopMapper.toDomain(jpaStopRepository.save(StopMapper.toEntity(stop)));
     }
+
+    @Override
+    public List<Stop> searchByName(String name) {
+        return jpaStopRepository.searchByName(name).stream()
+            .map(StopMapper::toDomain).toList();
+    }
 }

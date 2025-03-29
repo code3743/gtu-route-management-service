@@ -18,6 +18,7 @@ public interface GenericRepository<T, I> {
 
     PaginatedResult<T> findAll(int page, int size);
     List<T> searchByFieldLike(String fieldName, String value);
+    PaginatedResult<T> searchByFieldLike(String fieldName, String value, int page, int size);
  
     long countAll();
 

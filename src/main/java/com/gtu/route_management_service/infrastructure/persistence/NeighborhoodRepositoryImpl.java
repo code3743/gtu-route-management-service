@@ -63,4 +63,11 @@ public class NeighborhoodRepositoryImpl implements NeighborhoodRepository{
             .toList();
     }
 
+    @Override
+    public List<Neighborhood> searchByName(String name) {
+        return jpaNeighborhoodRepository.searchByName(name).stream()
+            .map(NeighborhoodMapper::toDomain)
+            .toList();
+    }
+
 }

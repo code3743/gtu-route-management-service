@@ -38,6 +38,9 @@ public class NeighborhoodUseCase {
         return NeighborhoodMapper.toDTOList(neighborhoodService.getAllNeighborhoods());
     }
 
+    public List<NeighborhoodDTO> getNeighborhoodsByIds(List<Long> ids) {
+        return NeighborhoodMapper.toDTOList(neighborhoodService.getNeighborhoodsByIds(ids));
+    }
 
 
 }

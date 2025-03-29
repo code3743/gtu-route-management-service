@@ -10,4 +10,5 @@ public interface StopService {
     Optional<Stop> getStopById(Long id);
     void deleteStop(Long id);
     Stop updateStop(Stop stop);
+    List<Stop> searchByName(String name);
 }
