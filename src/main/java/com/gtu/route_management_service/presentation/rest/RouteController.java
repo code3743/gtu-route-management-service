@@ -2,6 +2,7 @@ package com.gtu.route_management_service.presentation.rest;
 
 import com.gtu.route_management_service.application.dto.RouteDTO;
 import com.gtu.route_management_service.application.usecase.RouteUseCase;
+import com.gtu.route_management_service.application.dto.ResponseDTO;
 import jakarta.validation.Valid;
 
 import java.util.List;
@@ -20,39 +21,40 @@ public class RouteController {
     }
 
     @PostMapping
-    public ResponseEntity<RouteDTO> createRoute(@Valid @RequestBody RouteDTO routeDTO) {
+    public ResponseEntity<ResponseDTO> createRoute(@Valid @RequestBody RouteDTO routeDTO) {
         RouteDTO createdRoute = routeUseCase.createRoute(routeDTO);
-        return ResponseEntity.status(201).body(createdRoute);
+        return ResponseEntity.status(201).body(new ResponseDTO("Route created successfully", createdRoute, 201));
     }
 
     @GetMapping
-    public ResponseEntity<List<RouteDTO>> getAllRoutes() {
-        return ResponseEntity.ok(routeUseCase.getAllRoutes());          
+    public ResponseEntity<ResponseDTO> getAllRoutes() {
+        List<RouteDTO> routes = routeUseCase.getAllRoutes();
+        return ResponseEntity.ok(new ResponseDTO("Routes retrieved successfully", routes, 200));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RouteDTO> updateRoute(@PathVariable Long id, @Valid @RequestBody RouteDTO routeDTO) {
+    public ResponseEntity<ResponseDTO> updateRoute(@PathVariable Long id, @Valid @RequestBody RouteDTO routeDTO) {
         routeDTO.setId(id);
         RouteDTO updatedRoute = routeUseCase.updateRoute(routeDTO);
-        return ResponseEntity.ok(updatedRoute);
+        return ResponseEntity.ok(new ResponseDTO("Route updated successfully", updatedRoute, 200));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRoute(@PathVariable Long id) {
+    public ResponseEntity<ResponseDTO> deleteRoute(@PathVariable Long id) {
         routeUseCase.deleteRoute(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new ResponseDTO("Route deleted successfully", null, 200));
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<RouteDTO>> findRoutesByName(@RequestParam String name) {
+    public ResponseEntity<ResponseDTO> getRouteByName(@RequestParam String name) {
         List<RouteDTO> routes = routeUseCase.getRouteByName(name);
-        return ResponseEntity.ok(routes);
+        return ResponseEntity.ok(new ResponseDTO("Routes retrieved successfully", routes, 200));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RouteDTO> getRouteById(@PathVariable Long id) {
+    public ResponseEntity<ResponseDTO> getRouteById(@PathVariable Long id) {
         RouteDTO route = routeUseCase.getRouteById(id);
-        return ResponseEntity.ok(route);
+        return ResponseEntity.ok(new ResponseDTO("Route retrieved successfully", route, 200));
     }
 
 }

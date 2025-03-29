@@ -2,6 +2,7 @@ package com.gtu.route_management_service.presentation.rest;
 
 import com.gtu.route_management_service.application.dto.StopDTO;
 import com.gtu.route_management_service.application.usecase.StopUseCase;
+import com.gtu.route_management_service.application.dto.ResponseDTO;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,39 +19,32 @@ public class StopController {
     }
    
     @PostMapping
-    public ResponseEntity<StopDTO> createStop(@RequestBody StopDTO stopDTO) {
+    public ResponseEntity<ResponseDTO> createStop(@RequestBody StopDTO stopDTO) {
         StopDTO createdStop = stopUseCase.createStop(stopDTO);
-        return ResponseEntity.status(201).body(createdStop);
+        return ResponseEntity.status(201).body(new ResponseDTO("Stop created successfully", createdStop, 201));
     }
 
     @GetMapping
-    public ResponseEntity<List<StopDTO>> getAllStops(@RequestParam(value = "search", required = false) String search) {
-        if (search != null) {
-            List<StopDTO> stops = stopUseCase.searchByName(search);
-            return ResponseEntity.ok(stops);
-        }
-        List<StopDTO> stops = stopUseCase.getAllStops();    
-        return ResponseEntity.ok(stops);
+    public ResponseEntity<ResponseDTO> getAllStops() {
+        List<StopDTO> stops = stopUseCase.getAllStops();
+        return ResponseEntity.ok(new ResponseDTO("Stops retrieved successfully", stops, 200));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<StopDTO> getStopById(@PathVariable Long id) {
-        StopDTO stopDTO = stopUseCase.getStopById(id);
-        if (stopDTO == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(stopDTO);
+    public ResponseEntity<ResponseDTO> getStopById(@PathVariable Long id) {
+        StopDTO stop = stopUseCase.getStopById(id);
+        return ResponseEntity.ok(new ResponseDTO("Stop retrieved successfully", stop, 200));
     }
 
     @DeleteMapping("/{id}")
-    public  ResponseEntity<Void> deleteStop(@PathVariable Long id) {
+    public  ResponseEntity<ResponseDTO> deleteStop(@PathVariable Long id) {
         stopUseCase.deleteStop(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new ResponseDTO("Stop deleted successfully", null, 200));
     }
 
     @PutMapping
-    public ResponseEntity<StopDTO> updateStop(@RequestBody StopDTO stopDTO) {
+    public ResponseEntity<ResponseDTO> updateStop(@RequestBody StopDTO stopDTO) {
         StopDTO updatedStop = stopUseCase.updateStop(stopDTO);
-        return ResponseEntity.ok(updatedStop);
+        return ResponseEntity.ok(new ResponseDTO("Stop updated successfully", updatedStop, 200));
     }
 }
