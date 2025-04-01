@@ -53,12 +53,14 @@ public class NeighborhoodController {
 
 
     @DeleteMapping("/{id}")
+    @Operation(summary = "Delete a neighborhood", description = "Remove a neighborhood from the system by its unique identifier.")
     public ResponseEntity<ResponseDTO<Long>> deleteNeighborhood(@PathVariable Long id) {
         neighborhoodUseCase.deleteNeighborhood(id);
         return ResponseEntity.status(200).body(new ResponseDTO<>("Neighborhood deleted successfully", id, 200));
     }
 
     @PutMapping
+    @Operation(summary = "Update a neighborhood", description = "Modify an existing neighborhood in the system.")
     public ResponseEntity<ResponseDTO<NeighborhoodDTO>> updateNeighborhood(@RequestBody NeighborhoodDTO neighborhoodDTO) {
         NeighborhoodDTO updatedNeighborhood = neighborhoodUseCase.updateNeighborhood(neighborhoodDTO);
         return ResponseEntity.status(200).body(new ResponseDTO<>("Neighborhood updated successfully", updatedNeighborhood, 200));
