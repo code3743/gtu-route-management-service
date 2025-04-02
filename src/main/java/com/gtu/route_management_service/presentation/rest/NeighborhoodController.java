@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/neighborhoods")
 @Tag(name = "Neighborhoods", description = "Endpoints for managing neighborhoods")
+@CrossOrigin(origins = "*")
 public class NeighborhoodController {
 
     private final NeighborhoodUseCase neighborhoodUseCase;

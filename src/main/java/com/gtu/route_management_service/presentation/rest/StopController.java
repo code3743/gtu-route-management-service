@@ -15,6 +15,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/stops")
 @Tag(name = "Stops", description = "Endpoints for managing stops")
+@CrossOrigin(origins = "*")
 public class StopController {
     private final StopUseCase stopUseCase;
 
