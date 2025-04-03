@@ -98,14 +98,14 @@ class RouteControllerTest {
     @Test
     void createRoute_RouteUseCaseThrowsException() throws Exception {
         when(routeUseCase.createRoute(routeDTO))
-                .thenThrow(new IllegalArgumentException("The route name already exists: Ruta 1"));
+                .thenThrow(new IllegalArgumentException("The route name already exists: Test Route"));
 
         mockMvc.perform(post("/routes")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(routeDTO)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message.error", is("The route name already exists: Ruta 1")));
+                .andExpect(jsonPath("$.message.error", is("The route name already exists: Test Route")));
 
         verify(routeUseCase, times(1)).createRoute(routeDTO);
     }
