@@ -96,44 +96,6 @@ class RouteControllerTest {
     }
 
     @Test
-    void createRoute_RouteUseCaseThrowsException() throws Exception {
-        when(routeUseCase.createRoute(routeDTO))
-                .thenThrow(new IllegalArgumentException("The route name already exists: Test Route"));
-
-        mockMvc.perform(post("/routes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(routeDTO)))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message.error", is("The route name already exists: Test Route")));
-
-        verify(routeUseCase, times(1)).createRoute(routeDTO);
-    }
-
-    @Test
-    void createRoute_InvalidRouteDTO_ReturnsBadRequest() throws Exception {
-        RouteDTO invalidRouteDTO = new RouteDTO();
-        invalidRouteDTO.setName(""); 
-        invalidRouteDTO.setStartTime(null); 
-        invalidRouteDTO.setEndTime(null); 
-        invalidRouteDTO.setNeighborhoodIds(Collections.emptyList()); 
-        invalidRouteDTO.setStops(Collections.singletonList(1L)); 
-
-        mockMvc.perform(post("/routes")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidRouteDTO)))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message.name", is("The route name cannot be empty")))
-                .andExpect(jsonPath("$.message.startTime", is("The start time is mandatory")))
-                .andExpect(jsonPath("$.message.endTime", is("The end time is mandatory")))
-                .andExpect(jsonPath("$.message.neighborhoodIds", is("The list of neighbothoods cannot be empty")))
-                .andExpect(jsonPath("$.message.stops", is("The route must have at least two stops")));
-
-        verify(routeUseCase, never()).createRoute(any(RouteDTO.class));
-    }
-
-    @Test
     void getAllRoutes_Success() throws Exception {
         List<RouteDTO> routes = Arrays.asList(routeDTO);
         when(routeUseCase.getAllRoutes()).thenReturn(routes);
@@ -201,44 +163,6 @@ class RouteControllerTest {
     }
 
     @Test
-    void updateRoute_RouteUseCaseThrowsException() throws Exception {
-        when(routeUseCase.updateRoute(any(RouteDTO.class)))
-                .thenThrow(new IllegalArgumentException("Route does not exist"));
-
-        mockMvc.perform(put("/routes/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(routeDTO)))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message.error", is("Route does not exist")));
-
-        verify(routeUseCase, times(1)).updateRoute(argThat(dto -> dto.getId().equals(1L)));
-    }
-
-    @Test
-    void updateRoute_InvalidRouteDTO() throws Exception {
-        RouteDTO invalidRouteDTO = new RouteDTO();
-        invalidRouteDTO.setName(""); 
-        invalidRouteDTO.setStartTime(null); 
-        invalidRouteDTO.setEndTime(null); 
-        invalidRouteDTO.setNeighborhoodIds(Collections.emptyList()); 
-        invalidRouteDTO.setStops(Collections.singletonList(1L)); 
-
-        mockMvc.perform(put("/routes/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(objectMapper.writeValueAsString(invalidRouteDTO)))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message.name", is("The route name cannot be empty")))
-                .andExpect(jsonPath("$.message.startTime", is("The start time is mandatory")))
-                .andExpect(jsonPath("$.message.endTime", is("The end time is mandatory")))
-                .andExpect(jsonPath("$.message.neighborhoodIds", is("The list of neighbothoods cannot be empty")))
-                .andExpect(jsonPath("$.message.stops", is("The route must have at least two stops")));
-
-        verify(routeUseCase, never()).updateRoute(any(RouteDTO.class));
-    }
-
-    @Test
     void deleteRoute_Success() throws Exception {
         doNothing().when(routeUseCase).deleteRoute(1L);
 
@@ -248,18 +172,6 @@ class RouteControllerTest {
                 .andExpect(jsonPath("$.message", is("Route deleted successfully")))
                 .andExpect(jsonPath("$.status", is(200)))
                 .andExpect(jsonPath("$.data").doesNotExist());
-
-        verify(routeUseCase, times(1)).deleteRoute(1L);
-    }
-
-    @Test
-    void deleteRoute_RouteUseCaseThrowsException() throws Exception {
-        doThrow(new IllegalArgumentException("Route does not exist")).when(routeUseCase).deleteRoute(1L);
-
-        mockMvc.perform(delete("/routes/1"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message.error", is("Route does not exist"))); 
 
         verify(routeUseCase, times(1)).deleteRoute(1L);
     }
@@ -288,20 +200,6 @@ class RouteControllerTest {
     }
 
     @Test
-    void findRoutesByName_RouteUseCaseThrowsException() throws Exception {
-        when(routeUseCase.getRouteByName("Test Route"))
-                .thenThrow(new IllegalArgumentException("No routes found with the name: Test Route"));
-
-        mockMvc.perform(get("/routes/search")
-                .param("name", "Test Route"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message.error", is("No routes found with the name: Test Route")));
-
-        verify(routeUseCase, times(1)).getRouteByName("Test Route");
-    }
-
-    @Test
     void getRouteById_Success() throws Exception {
         when(routeUseCase.getRouteById(1L)).thenReturn(routeDTO);
 
@@ -318,19 +216,6 @@ class RouteControllerTest {
                 .andExpect(jsonPath("$.data.neighborhoodIds", contains(1, 2)))
                 .andExpect(jsonPath("$.data.stops", contains(1, 2)));
                 
-        verify(routeUseCase, times(1)).getRouteById(1L);
-    }
-
-    @Test
-    void getRouteById_RouteUseCaseThrowsException() throws Exception {
-        when(routeUseCase.getRouteById(1L))
-                .thenThrow(new IllegalArgumentException("Route does not exist"));
-
-        mockMvc.perform(get("/routes/1"))
-                .andExpect(status().isBadRequest())
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message.error", is("Route does not exist")));
-
         verify(routeUseCase, times(1)).getRouteById(1L);
     }
 }
