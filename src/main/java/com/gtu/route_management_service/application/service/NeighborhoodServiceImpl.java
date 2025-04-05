@@ -18,6 +18,9 @@ public class NeighborhoodServiceImpl implements NeighborhoodService {
 
     @Override
     public Neighborhood createNeighborhood(Neighborhood neighborhood) {
+        if (neighborhood.getName() == null || neighborhood.getName().isEmpty()) {
+            throw new IllegalArgumentException("Neighborhood name cannot be empty");
+        }
         return neighborhoodRepository.save(neighborhood);
     }
 
@@ -45,6 +48,9 @@ public class NeighborhoodServiceImpl implements NeighborhoodService {
     public Neighborhood updateNeighborhood(Neighborhood neighborhood) {
         if (!neighborhoodRepository.existsById(neighborhood.getId())) {
             throw new IllegalArgumentException("Neighborhood does not exist");
+        }
+        if (neighborhood.getName() == null || neighborhood.getName().isEmpty()) {
+            throw new IllegalArgumentException("Neighborhood name cannot be empty");
         }
         return neighborhoodRepository.update(neighborhood);
     }
