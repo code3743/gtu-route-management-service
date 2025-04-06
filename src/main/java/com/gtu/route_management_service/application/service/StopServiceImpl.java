@@ -23,6 +23,9 @@ public class StopServiceImpl implements StopService {
 
     @Override
     public Stop createStop(Stop stop) {
+        if (stop.getName() == null || stop.getName().isEmpty()) {
+            throw new IllegalArgumentException("Stop name cannot be empty");
+        }
         if (!neighborhoodRepository.existsById(stop.getNeighborhoodId())) {
             throw new IllegalArgumentException("Neighborhood does not exist");
         }
