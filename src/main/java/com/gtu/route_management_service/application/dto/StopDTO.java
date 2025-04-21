@@ -1,6 +1,7 @@
 package com.gtu.route_management_service.application.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class StopDTO {
     private Long id;
     
     @Schema(description = "Name of the stop", example = "Main Street")
+    @NotEmpty(message = "Stop name cannot be empty")
     private String name;
 
     @Schema(description = "Description of the stop", example = "This stop is located at Main Street and 1st Avenue")
