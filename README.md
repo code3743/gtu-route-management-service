@@ -25,7 +25,7 @@ Para mantener un flujo de desarrollo organizado, se siguen las siguientes reglas
 ### 2. **Gestión de la Base de Datos**
 - Se configuró **PostgreSQL** como base de datos principal.
 - Se definieron las propiedades de conexión en el archivo `application.properties`, permitiendo la personalización mediante variables de entorno:
-  - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_USER`, `DB_PASSWORD`.
+  - `DB_HOST`, `DB_PORT`, `DB_NAME`, `DB_PASSWORD`.
 
 ### 3. **API REST**
 - Se implementaron controladores para manejar las operaciones CRUD (Crear, Leer, Actualizar, Eliminar) de rutas.
