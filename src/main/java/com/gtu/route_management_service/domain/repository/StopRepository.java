@@ -14,4 +14,5 @@ public interface StopRepository {
     List<Stop> findAll();
     List<Stop> findAllById(List<Long> ids);
     Stop update(Stop stop);
+    List<Stop> searchByName(String name);
 }

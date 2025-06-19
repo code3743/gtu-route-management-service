@@ -35,11 +35,7 @@ public class StopEntity {
     @Column(nullable = false)
     private Double longitude;
 
-    public StopEntity(String name, String description, Long neighborhoodId, Double latitude, Double longitude) {
-        this.name = name;
-        this.description = description;
-        this.neighborhoodId = neighborhoodId;
-        this.latitude = latitude;
-        this.longitude = longitude;
+    public StopEntity(Long id) {
+        this.id = id;
     }
 }

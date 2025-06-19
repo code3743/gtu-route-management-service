@@ -1,31 +1,38 @@
 package com.gtu.route_management_service.infrastructure.persistence.mappers;
 
 import com.gtu.route_management_service.domain.model.Route;
+import com.gtu.route_management_service.infrastructure.persistence.entities.NeighborhoodEntity;
 import com.gtu.route_management_service.infrastructure.persistence.entities.RouteEntity;
+import com.gtu.route_management_service.infrastructure.persistence.entities.StopEntity;
 
-import org.springframework.stereotype.Component;
+import lombok.experimental.UtilityClass;
 
-@Component
+import java.util.List;
+
+
+@UtilityClass
 public class RouteEntityMapper {
-    public RouteEntity toEntity(Route route) {
+    public RouteEntity toEntity(Route route, List<NeighborhoodEntity> neighborhoodsIds,List<StopEntity> stopsIds) {
         return new RouteEntity(
+            route.getId(),
             route.getName(),
             route.getDescription(),
             route.getStartTime(),
             route.getEndTime(),
-            NeighborhoodMapper.toEntityList(route.getNeighborhood()),
-            StopMapper.toEntityList(route.getStop())
+            neighborhoodsIds,
+            stopsIds
         );
     }
 
     public Route toDomain(RouteEntity entity) {
         return new Route(
+            entity.getId(),
             entity.getName(),
             entity.getDescription(),
             entity.getStarTime(),
             entity.getEndTime(),
-            NeighborhoodMapper.toDomainList(entity.getNeighborhood()),
-            StopMapper.toDomainList(entity.getStop())
+            entity.getNeighborhood().stream().map(NeighborhoodEntity::getId).toList(),
+            entity.getStop().stream().map(StopEntity::getId).toList()
         );
     }
 }

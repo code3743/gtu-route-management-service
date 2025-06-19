@@ -3,19 +3,23 @@ package com.gtu.route_management_service.application.service;
 import com.gtu.route_management_service.domain.model.Route;
 import com.gtu.route_management_service.domain.repository.RouteRepository;
 import com.gtu.route_management_service.domain.repository.StopRepository;
+import com.gtu.route_management_service.domain.repository.NeighborhoodRepository;
 import com.gtu.route_management_service.domain.service.RouteService;
 
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RouteServiceImpl implements RouteService {
     private final RouteRepository routeRepository;
     private final StopRepository stopRepository;
+    private final NeighborhoodRepository neighborhoodRepository;
 
-    public RouteServiceImpl(RouteRepository routeRepository, StopRepository stopRepository) {
+    public RouteServiceImpl(RouteRepository routeRepository, NeighborhoodRepository neighborhoodsRepository, StopRepository stopRepository) {
         this.routeRepository = routeRepository;
         this.stopRepository = stopRepository;
+        this.neighborhoodRepository = neighborhoodsRepository;
     }
 
     @Override
@@ -24,17 +28,70 @@ public class RouteServiceImpl implements RouteService {
             throw new IllegalArgumentException("The route name already exists: " + route.getName());
         }
 
-        List<Long> stopIds = route.getStop().stream().map(stop -> stop.getId()).toList();
+        List<Long> stopIds = route.getStopsIds();
         List<Long> existingStopIds = stopRepository.findAllExistingIds(stopIds);
         if (existingStopIds.size() != stopIds.size()) {
-            throw new IllegalArgumentException("Some stops do not exists: " + stopIds);
+            throw new IllegalArgumentException("Some stops do not exist: " + stopIds);
         }
+
+        List<Long> neighborhoodIds = route.getNeighborhoodIds();
+        List<Long> existingNeighborhoodIds = neighborhoodRepository.findAllExistingIds(neighborhoodIds);
+        if (existingNeighborhoodIds.size() != neighborhoodIds.size()) {
+            throw new IllegalArgumentException("Some neighborhoods do not exist: " + neighborhoodIds);
+        }
+
     }
 
     @Override
     public Route saveRoute(Route route) {
         validateRoute(route);
         return routeRepository.save(route);
+    }
+
+    @Override
+    public List<Route> getAllRoutes() {
+        return routeRepository.findAll();
+    }
+
+    @Override
+    public Route createRoute(Route route) {
+        if (routeRepository.findByName(route.getName()).isPresent()) {
+            throw new IllegalArgumentException("The route name already exists: " + route.getName());
+        }
+        return routeRepository.save(route);
+    }
+
+    @Override
+    public Route updateRoute(Route domain) {
+        Route existingRoute = routeRepository.existsById(domain.getId())
+                .orElseThrow(() -> new IllegalArgumentException("Route does not exist"));
+        if (!existingRoute.getId().equals(domain.getId())) {
+            throw new IllegalArgumentException("The route name already exists: " + domain.getName());
+        }
+        return routeRepository.save(domain);
+    }
+
+    @Override
+    public void deleteRoute(Long id) {
+        if (!routeRepository.existsById(id).isPresent()) {
+            throw new IllegalArgumentException("Route does not exist");
+        }
+        routeRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Route> getRouteByName(String name) {
+        Optional<Route> routes = routeRepository.findByName(name);
+        if (routes.isEmpty()) {
+            throw new IllegalArgumentException("No routes found with the name: " + name);
+        }
+        return List.of(routes.get());
+    }
+
+    @Override
+    public Route getRouteById(Long id) {
+        return routeRepository.existsById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Route does not exist"));
     }
     
 }
