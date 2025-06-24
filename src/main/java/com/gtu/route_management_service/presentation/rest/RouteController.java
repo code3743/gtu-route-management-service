@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/routes")
 @Tag    (name = "Routes", description = "Endpoints for managing routes")
-@CrossOrigin(origins = "*")
 public class RouteController {
     private final RouteUseCase routeUseCase;
 
